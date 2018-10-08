@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from results.views import main, voivodeship, district, unit
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', main, name='main'),
+    path('<str:name>', voivodeship, name='voivodeship'),
+    path('<str:name>', district, name='distric'),
+    path('<str:name>', unit, name='unit'),
 ]

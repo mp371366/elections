@@ -1,0 +1,10 @@
+{% extends "basic.html" %}
+
+{% block main %}
+  {{ super() }}
+  <nav>
+    {% for link in links %}
+      <a href="{{ link.url }}">{{ link.name }}</a>
+    {% endfor %}
+  </nav>
+{% endblock main %}

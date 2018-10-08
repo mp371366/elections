@@ -1,0 +1,45 @@
+{% extends "basic.html" %}
+
+{% block head %}
+  {{ super() }}
+  <script>
+    google.charts.load('current', { 'packages': ['geochart'], 'mapsApiKey': 'AIzaSyCzZ-ZwdwdlYSCqhQtW3S8Odu2O2uSM3OY' });
+    google.charts.setOnLoadCallback(drawMap);
+    
+    function drawMap() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Województwo');
+      data.addColumn('number', 'Frekwencja');
+      
+      data.addRows([
+        {% for item in map_data %}
+          ['{{ item.name }}', {{ item.value }}],
+        {% endfor %}
+      ]);
+      
+      var options = {
+        region: 'PL',
+        sizeAxis: { minValue: 0, maxValue: 100 },
+        colorAxis: { colors: ['yellow', 'red'] },
+        dataFormat: 'regions',
+        height: '100%',
+        width: '100%',
+        resolution: 'provinces',
+      };
+
+      var map = new google.visualization.GeoChart(document.getElementById('map'));
+      
+      map.draw(data, options);
+      
+      google.visualization.events.addListener(map, 'select', function(event) {
+        var selection = String(100 + 2 * (1 + map.getSelection()[0].row)).slice(-2);
+        window.location = selection + '.html';
+      });
+    }
+  </script>
+{% endblock head %}
+
+{% block main %}
+  {{ super() }}
+  <div id="map"></div>
+{% endblock main %}

@@ -5,27 +5,27 @@ class Candidate(models.Model):
     surname = models.CharField(max_length=50)
 
     def __str__(self):
-        return "{self.name} {self.surname}"
+        return "{0} {1}".format(self.name, self.surname)
 
 class Voivodeship(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
-        return "Województwo {self.name}"
+        return "Województwo {0}".format(self.name)
 
 class District(models.Model):
     name = models.CharField(max_length=40)
     voivodeship = models.ForeignKey(Voivodeship, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "Powiat {self.name}"
+        return "Powiat {0}".format(self.name)
 
 class Unit(models.Model):
     name = models.CharField(max_length=40)
     district = models.ForeignKey(District, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "Gmina {self.name}"
+        return "Gmina {0}".format(self.name)
 
 class Result(models.Model):
     result = models.PositiveIntegerField()
@@ -33,4 +33,4 @@ class Result(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "{self.result}"
+        return "{0}".format(self.result)
